@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+local_repo="/dump"
+backup_name="$(date)"
+upstream="${UPSTREAM}"
+mongo_url="${MONGO_URL}"
+project_name="${PROJECT_NAME}"
+
+
+if [ -z "${upstream}" ]; then
+  echo "UPSTREAM is not set"
+  exit 2
+fi
+
+if [ -z "${mongo_url}" ]; then
+  echo "MONGO_URL is not set"
+  exit 2
+fi
+
+
+echo "Backup: ${name}"
+
+if [ -d "${local_repo}" ]; then
+  echo "Removing ${local_repo}"
+  rm -rf "${local_repo}"
+fi
+
+if [ -z "${project_name}" ]; then
+  project_name="dump"
+fi
+
+git clone "${upstream}" "${local_repo}"
+cd "${local_repo}"
+
+# Perform the actual dump
+mongodump --uri "${mongo_url}" --out "${project_name}"
+
+if [ ! -z "$(git status -s)" ]; then
+  echo "Nothing to Commit"
+  exit 1
+fi
+
+echo "Staging files list"
+git add add -A
+git status
+
+echo "Pushing"
+git commit -a "${backup_name}"
+git push origin master
