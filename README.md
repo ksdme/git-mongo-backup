@@ -1,3 +1,5 @@
+![Build & Push to DockerHub](https://github.com/ksdme/git-mongo-backup/workflows/Build%20&%20Push%20to%20DockerHub/badge.svg)
+
 ## Usage
 
 The following environment variables are expected to be available to the Docker container.
