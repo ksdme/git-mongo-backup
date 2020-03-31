@@ -5,6 +5,8 @@ services:
     image: ksdme/git-mongo-backup
     restart: unless-stopped
     environment:
+      - GIT_USER_NAME=bot
+      - GIT_USER_EMAIL=bot@example.com
       - PROJECT_NAME=something
       - BACKUP_CYCLE_INTERVAL=2h
       - MONGO_URL=mongodb://127.0.0.1:27017/db

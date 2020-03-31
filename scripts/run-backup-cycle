@@ -34,17 +34,16 @@ git clone "${upstream}" "${local_repo}"
 cd "${local_repo}"
 
 # Perform the actual dump
-mongodump --uri "${mongo_url}" --out "${project_name}"
+mongodump --uri "${mongo_url}" --out "/${project_name}"
 
-if [ ! -z "$(git status -s)" ]; then
+if [ -z "$(git status -s)" ]; then
   echo "Nothing to Commit"
   exit 1
 fi
 
 echo "Staging files list"
-git add add -A
-git status
+git add -A
 
 echo "Pushing"
-git commit -a "${backup_name}"
+git commit -m "${backup_name}"
 git push origin master

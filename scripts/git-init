@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+git_name="${GIT_USER_NAME}"
+git_email="${GIT_USER_EMAIL}"
+
+if [ -z "$(git config --global --get user.name)" ]; then
+  if [ -z "${git_name}" ]; then
+    echo "GIT_USER_NAME is required and not set"
+    exit 255
+  fi
+
+  git config --global user.name "${git_name}"
+fi
+
+if [ -z "$(git config --global --get user.email)" ]; then
+  if [ -z "${git_email}" ]; then
+    echo "GIT_USER_EMAIL is required and not set"
+    exit 255
+  fi
+
+  git config --global user.email "${git_email}"
+fi

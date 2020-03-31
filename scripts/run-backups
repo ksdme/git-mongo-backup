@@ -2,13 +2,23 @@
 
 backup_cycle_interval="${BACKUP_CYCLE_INTERVAL}"
 
+# Add control hooks
+trap "exit" SIGHUP SIGINT SIGTERM
+
 if [ -z "${backup_cycle_interval}" ]; then
   echo "BACKUP_CYCLE_INTERVAL is not set"
   exit 2
 fi
 
+if ! git-init; then
+  exit 255
+fi
+
 while true; do
-  echo "\n\n"
+  echo && echo
+
   run-backup-cycle
-  sleep "${backup_cycle_interval}"
+
+  sleep "${backup_cycle_interval}" &
+  wait $!
 done
