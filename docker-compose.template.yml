@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mongo-database-backup:
+    image: ksdme/git-mongo-backup
+    restart: unless-stopped
+    environment:
+      - PROJECT_NAME=something
+      - BACKUP_CYCLE_INTERVAL=2h
+      - MONGO_URL=mongodb://127.0.0.1:27017/db
+      - UPSTREAM=https://username:password@github.com/example/example.git
