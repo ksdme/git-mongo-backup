@@ -18,8 +18,7 @@ if [ -z "${mongo_url}" ]; then
   exit 2
 fi
 
-
-echo "Backup: ${name}"
+echo "Backup: ${backup_name}"
 
 if [ -d "${local_repo}" ]; then
   echo "Removing ${local_repo}"
