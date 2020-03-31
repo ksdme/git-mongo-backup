@@ -31,6 +31,7 @@ fi
 
 git clone "${upstream}" "${local_repo}"
 cd "${local_repo}"
+rm -rf *
 
 # Perform the actual dump
 mongodump --uri "${mongo_url}" --out "/${project_name}"
