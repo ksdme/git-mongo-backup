@@ -3,34 +3,22 @@ set -e
 
 local_repo="/dump"
 backup_name="$(date)"
-upstream="${UPSTREAM}"
 mongo_url="${MONGO_URL}"
 project_name="${PROJECT_NAME}"
-
-
-if [ -z "${upstream}" ]; then
-  echo "UPSTREAM is not set"
-  exit 2
-fi
 
 if [ -z "${mongo_url}" ]; then
   echo "MONGO_URL is not set"
   exit 2
 fi
 
-echo "Backup: ${backup_name}"
-
-if [ -d "${local_repo}" ]; then
-  echo "Removing ${local_repo}"
-  rm -rf "${local_repo}"
-fi
-
 if [ -z "${project_name}" ]; then
   project_name="dump"
 fi
 
-git clone "${upstream}" "${local_repo}"
+echo "Backup: ${backup_name}"
+
 cd "${local_repo}"
+git reset --hard
 rm -rf *
 
 # Perform the actual dump

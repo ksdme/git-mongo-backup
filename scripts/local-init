@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+local_repo="/dump"
+upstream="${UPSTREAM}"
+
+if [ -z "${upstream}" ]; then
+  echo "UPSTREAM is not set"
+  exit 2
+fi
+
+if [ -d "${local_repo}" ]; then
+  echo "Removing ${local_repo}"
+  rm -rf "${local_repo}"
+fi
+
+git clone "${upstream}" "${local_repo}"
